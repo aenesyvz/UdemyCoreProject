@@ -1,0 +1,44 @@
+﻿@model EntityLayer.Concrete.Protfolio
+
+@{
+    ViewData["Title"] = "UpdateProtfolio";
+    Layout = "~/Views/Shared/_NewAdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("UpdateProtfolio", "Protfolio", FormMethod.Post))
+{
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Proje Ekleme</h4>
+
+                <form class="forms-sample">
+                    @Html.HiddenFor(x => x.ProtfolioId)
+
+                    @Html.Label("Proje Adı")
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+
+                    <br />
+
+                    @Html.Label("Proje Url")
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+
+                    <br />
+
+                    @Html.Label("Proje Resim Yolu 1")
+                    @Html.TextBoxFor(x => x.ImageUrl, new { @class = "form-control" })
+
+                    <br />
+
+                    @Html.Label("Proje Resim Yolu 2")
+                    @Html.TextBoxFor(x => x.ImageUrl2, new { @class = "form-control" })
+
+                    <button class="btn btn-info">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+
+

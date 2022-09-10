@@ -1,0 +1,35 @@
+﻿@model EntityLayer.Concrete.Message
+@{
+    ViewData["Title"] = "ContactDetails";
+    Layout = "~/Views/Shared/_NewAdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddProtfolio", "Protfolio", FormMethod.Get))
+{
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">İletişim Detay</h4>
+                @Html.HiddenFor(x=>x.MessageId)
+                <form class="forms-sample">
+                    @Html.Label("Gönderenin Adı")
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+
+                    <br />
+
+                    @Html.Label("Gönderenin Maili")
+                    @Html.TextBoxFor(x => x.Mail, new { @class = "form-control" })
+
+                    <br />
+
+                    @Html.Label("Tarih")
+                    @Html.TextBoxFor(x => x.Date, new { @class = "form-control" })
+
+      
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+

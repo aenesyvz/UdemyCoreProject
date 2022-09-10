@@ -1,0 +1,130 @@
+﻿@using EntityLayer.Concrete
+@model List<Experience>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewAdminLayout.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="p-2">
+        <button type="button" id="getList" class="btn btn-outline-primary">Verileri Getir</button>
+        <button type="button" id="btnAdd" class="btn btn-outline-info">Veri Ekle</button>
+        <button type="button" id="btnGetById" class="btn btn-outline-dark">Id'e Göre Ara</button>
+        <button type="button" id="btnDelete" class="btn btn-outline-dark">Veri Silme</button>
+    </div>
+</div>
+
+<h4 class="text-centr">Yazar Listesi</h4>
+<div class="p-2" id="listExperience">
+
+</div>
+
+<br />
+<h4 class="text-centr">Deneyim Id</h4>
+<div class="p-2" id="getByIdExperience">
+
+</div>
+
+<br />
+
+<div class="col-md-12">
+    <h4>Id'e Göre Arama</h4>
+    <input type="text" class="form-control" id="inpId" placeholder="Id" />
+    <br />
+
+</div>
+
+<br />
+<div class="col-md-12">
+    <h4>Deneyim Silme</h4>
+    <input type="text" class="form-control" id="inpDelId" placeholder="Id" />
+    <br />
+
+</div>
+
+<br />
+<div class="col-md-12">
+    <h4>Deneyim Ekleme</h4>
+    <br />
+    <input type="text" class="form-control" id="inpName" placeholder="Başlık" />
+    <br />
+    <input type="text" class="form-control" id="inpDate" placeholder="Tarih" />
+    <br />
+</div>
+@section Scripts
+{
+    <script>
+import { SUCCESS } from "dropzone";
+
+        $("#getList").click(function () {
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/AjaxExperience/ListExperience/",
+
+                success: function (func) {
+                    let users = jQuery.parseJSON(func);
+                    console.log(users);
+
+                    let htmlst = "<table class='table table-bordered'> <tr> <th> ID </th> <th> Başlık </th> <th> Tarih </th> </tr>";
+                    $.each(values, (index, value) => {
+                        htmlst += `<tr> <td> ${value.ExperienceId}</td> <td>${value.Name}</td> <td> ${value.Date}</td></tr>`
+                    });
+                    htmlst += "</table>";
+                    $("#listExperience").html(htmlst);
+                }
+            });
+        });
+
+        $("#btnAdd").click(function () {
+            let values = {
+                Name: $("#inpName").val(),
+                Date: $("#inpDate").val()
+            };
+            $.ajax({
+                type: "Post",
+                url: "/AjaxExperience/AddExperience/",
+                data: values,
+                success: function (func) {
+                    let result = jQuery.parseJSON(func);
+                    alert(result.Name + " başarılı bir şekilde eklendi!");
+                }
+            });
+        });
+
+        $("#btnGetById").click(x => {
+            let id = $("#inpId").val();
+
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/AjaxExperience/GetById/",
+                data: { ExperienceId: id },
+                success: function (func) {
+                    let result = jQuery.parseJSON(func);
+                    let htmlst = `<table class='table table-bordered'> <tr><th>Id </th><td>${result.ExperienceId}</td></tr><tr><th>Başlık</th><td>${result.Name}</td></tr></table>`
+
+                    $("#getByIdExperience").html(htmlst);
+                }
+            });
+        });
+
+        $("#btnDelete").click(x => {
+            let id = $("#inpDelId").val();
+            $.ajax({
+                url: "/Experience/DeleteExperience/" + id,
+                type: "post",
+                contentType: "/application/json",
+                dataType: "json",
+                success: function (func) {
+                    loadData();
+                }
+            })
+        })
+    </script>
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+

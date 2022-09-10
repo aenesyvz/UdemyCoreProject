@@ -1,0 +1,44 @@
+﻿@using EntityLayer.Concrete
+@model List<Protfolio>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewAdminLayout.cshtml";
+}
+
+<div class="card-header border-0">
+    <h3 class="mb-0">Proje Listesi</h3>
+</div>
+<!-- Light table -->
+<div class="table-responsive">
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="sort" data-sort="name">Proje</th>
+                <th scope="col" class="sort" data-sort="budget">Ücret</th>
+                <th scope="col" class="sort" data-sort="status">Durum</th>
+                <th scope="col" class="sort" data-sort="status">Tamamlanma Oranı</th>
+                <th scope="col">Sil</th>
+                <th scope="col">Düzenle</th>
+            </tr>
+        </thead>
+        <tbody class="list">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td class="budget">
+                        @item.Name
+                    </td>
+
+                    <td><a href="@item.ProjectUrl"></a>Projeye Git</td>
+
+                    <td><a href="/Protfolio/DeleteProtfolio/@item.ProtfolioId" class="btn btn-danger">Sil</a></td>
+                    <td><a href="/Protfolio/UpdateProtfolio/@item.ProtfolioId" class="btn btn-warning">Güncelle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a href="/Protfolio/AddProtfolio/" class="btn btn-info">Yeni Proje Ekle</a>
